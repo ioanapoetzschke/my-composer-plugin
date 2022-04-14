@@ -1,1 +1,2 @@
-# myComposerPlugin
+# my-composer-plugin
+
