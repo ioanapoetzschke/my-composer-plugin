@@ -1,0 +1,26 @@
+{
+    "name": "robotron/composer-plugin",
+    "description": "Composer plugin ",
+    "type": "composer-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ioana"
+        }
+    ],
+    "require": {
+        "php": "^7.0",
+        "composer-plugin-api": "^1.0"
+    },
+    "require-dev": {
+        "composer/composer": "^1.0.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "CristianRadulescu\\": "src"
+        }
+    },
+    "extra": {
+        "class": "Robotron\\PluginRobotron"
+    }
+}
