@@ -17,7 +17,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Wikimedia\\Composer\\Merge\\V2\\": "src/"
+            "My\\Composer\\": "src/"
         }
     },
     "extra": {
