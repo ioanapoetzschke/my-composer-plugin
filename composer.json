@@ -1,14 +1,8 @@
 {
-    "name": "/my-composer-plugin",
+    "name": "ioanapoetzschke/my-composer-plugin",
     "description": "Composer plugin",
     "type": "composer-plugin",
     "license": "MIT",
-    "authors": [
-        {
-            "name": "Ioana Pötzschke",
-            "email": "ioana.poetzschke@robotron.de"
-        }
-    ],
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
@@ -23,7 +17,7 @@
     },
     "autoload": {
         "psr-4": {
-            "My\\Composer\\": "src/"
+            "Wikimedia\\Composer\\Merge\\V2\\": "src/"
         }
     },
     "extra": {
@@ -32,5 +26,17 @@
     "config": {
         "optimize-autoloader": true,
         "sort-packages": true
+    },
+    "scripts": {
+        "coverage": [
+            "phpunit --log-junit=reports/unitreport.xml --coverage-text --coverage-html=reports/coverage --coverage-clover=reports/coverage.xml",
+            "phpcs --encoding=utf-8 --standard=PSR2 --report-checkstyle=reports/checkstyle-phpcs.xml --report-full --extensions=php src/* tests/phpunit/*"
+        ],
+        "test": [
+            "composer validate --no-interaction",
+            "parallel-lint src tests",
+            "phpunit",
+            "phpcs --encoding=utf-8 --standard=PSR2 --extensions=php src/* tests/phpunit/*"
+        ]
     }
 }
