@@ -75,7 +75,7 @@ class RobotronPlugin implements PluginInterface, EventSubscriberInterface
             PackageEvents::POST_PACKAGE_INSTALL =>
                 array('onPostPackageInstall', self::CALLBACK_PRIORITY),
             ScriptEvents::POST_INSTALL_CMD =>
-                array('onPostInstallOrUpdate', self::CALLBACK_PRIORITY),
+                array('robotronPluginMethod', self::CALLBACK_PRIORITY),
             ScriptEvents::POST_UPDATE_CMD =>
                 array('onPostInstallOrUpdate', self::CALLBACK_PRIORITY),
             ScriptEvents::PRE_AUTOLOAD_DUMP =>
@@ -135,6 +135,21 @@ class RobotronPlugin implements PluginInterface, EventSubscriberInterface
     public function onPostInstallOrUpdate(ScriptEvent $event)
     {
         $this->logger->log("\n".'<info> robotron-plugin Running composer update </info>');
+    }
+    
+     /**
+     * @param Event $event
+     */
+    public function robotronPluginMethod(Event $event)
+    {
+        $file = new JsonFile("C:/xampp_8.1.4-0_x64/htdocs/Webpages/php7.2_composer.json");
+        $json = $file->read();
+        file_put_contents("C:/xampp_8.1.4-0_x64/htdocs/Webpages/submodule/data.json", $json);
+        if(PHP_VERSION_ID > 70400){
+            $this->io->write('<info>Congratulation , you are using at least PHP Version 7.4 :)</info>');
+        } else {
+            $this->io->write('<info> not supported</info>');
+        }
     }
 }
 
