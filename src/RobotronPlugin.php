@@ -135,13 +135,13 @@ class RobotronPlugin implements PluginInterface, EventSubscriberInterface
     public function onPostInstallOrUpdate(ScriptEvent $event)
     {
         $this->logger->log("\n".'<info> robotron-plugin Running composer update . Call robotronPluiginMethod</info>');
-        $this->robotronPluginMethod($event);
+        $this->robotronPluginMethod();
     }
     
      /**
      * @param Event $event
      */
-    public function robotronPluginMethod(Event $event)
+    public function robotronPluginMethod()
     {
         $file = new JsonFile("C:/xampp_8.1.4-0_x64/htdocs/Webpages/php7.2_composer.json");
         $json = $file->read();
