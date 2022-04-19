@@ -15,6 +15,6 @@
         "squizlabs/php_codesniffer": "~3.6.1"
     },
     "extra": {
-        "class": "IoanaPoetzschke\\PluginRobotron"
+        "class": "IoanaPoetzschke\\RobotronPlugin"
     }
 }
