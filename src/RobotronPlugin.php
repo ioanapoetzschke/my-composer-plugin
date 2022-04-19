@@ -75,7 +75,7 @@ class RobotronPlugin implements PluginInterface, EventSubscriberInterface
             PackageEvents::POST_PACKAGE_INSTALL =>
                 array('onPostPackageInstall', self::CALLBACK_PRIORITY),
             ScriptEvents::POST_INSTALL_CMD =>
-                array('robotronPluginMethod', self::CALLBACK_PRIORITY),
+                array('onPostInstallOrUpdate', self::CALLBACK_PRIORITY),
             ScriptEvents::POST_UPDATE_CMD =>
                 array('onPostInstallOrUpdate', self::CALLBACK_PRIORITY),
             ScriptEvents::PRE_AUTOLOAD_DUMP =>
@@ -134,7 +134,8 @@ class RobotronPlugin implements PluginInterface, EventSubscriberInterface
      */
     public function onPostInstallOrUpdate(ScriptEvent $event)
     {
-        $this->logger->log("\n".'<info> robotron-plugin Running composer update </info>');
+        $this->logger->log("\n".'<info> robotron-plugin Running composer update . Call robotronPluiginMethod</info>');
+        $this->robotronPluginMethod($event);
     }
     
      /**
