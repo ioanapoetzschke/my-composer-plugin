@@ -4,10 +4,12 @@ namespace IoanaPoetzschke;
 
 use Composer\Composer;
 use Composer\EventDispatcher\EventSubscriberInterface;
+use Composer\Installer\PackageEvents;
 use Composer\IO\IOInterface;
 use Composer\Plugin\PluginInterface;
 use Composer\Plugin\PluginEvents;
 use Composer\Plugin\PreFileDownloadEvent;
+use Composer\Script\ScriptEvents;
 
 class RobotronPlugin implements PluginInterface, EventSubscriberInterface
 {
@@ -30,11 +32,17 @@ class RobotronPlugin implements PluginInterface, EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-
-        return [
-            PluginEvents::INIT =>
-                ['robotronPluginMethod', self::CALLBACK_PRIORITY]
-        ];
+        return array(
+            PluginEvents::INIT => array(
+                array('robotronPluginMethod', 0)
+            ),
+            PackageEvents::PRE_PACKAGE_INSTALL =>
+                array('robotronPluginMethod', self::CALLBACK_PRIORITY),
+            PackageEvents::POST_PACKAGE_INSTALL =>
+                array('robotronPluginMethod', self::CALLBACK_PRIORITY),
+            ScriptEvents::POST_INSTALL_CMD =>
+                array('robotronPluginMethod', self::CALLBACK_PRIORITY),
+        );
     }
     /**
      * @param Event $event
