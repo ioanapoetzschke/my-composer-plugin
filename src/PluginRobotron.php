@@ -1,52 +1,44 @@
 <?php
 
-namespace Robotron;
-
+namespace IoanaPoetzschke;
 
 use Composer\Composer;
-use Composer\EventDispatcher\Event;
 use Composer\EventDispatcher\EventSubscriberInterface;
 use Composer\IO\IOInterface;
-use Composer\Plugin\PluginEvents;
 use Composer\Plugin\PluginInterface;
-use Symfony\Component\Console\Helper\Table;
+use Composer\Plugin\PluginEvents;
+use Composer\Plugin\PreFileDownloadEvent;
 
-class PluginRobotron implements PluginInterface, EventSubscriberInterface
+class RobotronPlugin implements PluginInterface, EventSubscriberInterface
 {
-    /**
-     * @var Composer
-     */
     protected $composer;
-
-    /**
-     * @var IOInterface
-     */
     protected $io;
 
-    /**
-     * @param Composer $composer
-     * @param IOInterface $io
-     */
     public function activate(Composer $composer, IOInterface $io)
     {
         $this->composer = $composer;
         $this->io = $io;
     }
 
-    /**
-     * @return array
-     */
-    public static function getSubscribedEvents()
+    public function deactivate(Composer $composer, IOInterface $io)
     {
-        return array(
-            PluginEvents::INIT => 'pluginRobotronMethod'
-        );
     }
 
-    /**
+    public function uninstall(Composer $composer, IOInterface $io)
+    {
+    }
+
+    public static function getSubscribedEvents()
+    {
+         return array(
+                    PluginEvents::INIT => 'robotronPluginMethod'
+                );
+    }
+
+     /**
      * @param Event $event
      */
-    public function pluginRobotronMethod(Event $event)
+    public function robotronPluginMethod(Event $event)
     {
         if(PHP_VERSION_ID > 70400){
             $this->io->write(PHP_EOL.'<options=bold>========= Robotron plugin =========</>');
