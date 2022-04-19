@@ -1,6 +1,6 @@
 <?php
 
-namespace IoanaPoetzschke;
+namespace My\Composer;
 
 use Composer\Composer;
 use Composer\EventDispatcher\EventSubscriberInterface;
@@ -44,6 +44,14 @@ class RobotronPlugin implements PluginInterface, EventSubscriberInterface
                 array('robotronPluginMethod', self::CALLBACK_PRIORITY),
         );
     }
+
+    public function getCapabilities()
+    {
+        return array(
+            'Composer\Plugin\Capability\CommandProvider' => 'My\Composer\CommandProvider',
+        );
+    }
+
     /**
      * @param Event $event
      */
