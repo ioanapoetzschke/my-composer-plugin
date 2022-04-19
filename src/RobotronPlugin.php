@@ -1,5 +1,6 @@
 <?php
 
+
 namespace My\Composer;
 
 use Composer\Composer;
@@ -19,16 +20,16 @@ use Composer\Script\ScriptEvents;
 
 class RobotronPlugin implements PluginInterface, EventSubscriberInterface
 {
-    /**
-     * Priority that plugin uses to register callbacks.
-     */
-    private const CALLBACK_PRIORITY = 6000;
 
     /**
      * Offical package name
      */
     public const PACKAGE_NAME = 'ioanapoetzschke/my-composer-plugin';
 
+    /**
+     * Priority that plugin uses to register callbacks.
+     */
+    private const CALLBACK_PRIORITY = 50000;
 
     /**
      * @var Composer $composer
@@ -36,10 +37,9 @@ class RobotronPlugin implements PluginInterface, EventSubscriberInterface
     protected $composer;
 
     /**
-     * @var IOInterface $io
+     * @var Logger $logger
      */
-    protected $io;
-
+    protected $logger;
 
     /**
      * {@inheritdoc}
@@ -47,7 +47,7 @@ class RobotronPlugin implements PluginInterface, EventSubscriberInterface
     public function activate(Composer $composer, IOInterface $io)
     {
         $this->composer = $composer;
-        $this->io = $io;
+        $this->logger = new Logger('robotron-plugin', $io);
     }
 
     /**
@@ -94,38 +94,33 @@ class RobotronPlugin implements PluginInterface, EventSubscriberInterface
      */
     public function onInit(BaseEvent $event)
     {
-        $file = new JsonFile("C:/xampp_8.1.4-0_x64/htdocs/Webpages/php7.2_composer.json");
-        $json = $file->read();
-        file_put_contents("C:/xampp_8.1.4-0_x64/htdocs/Webpages/submodule/data.json", $json);
-        $this->io->write('<info>Congratulation , you are using at least PHP Version 7.4 :)</info>');
+        $this->logger->info(
+            " test onInit"
+        );
     }
 
     /**
-     * Handle an event callback for an install, update or dump command
+     * Handle an event callback for an install, update or dump command by
+     * checking for "merge-plugin" in the "extra" data and merging package
+     * contents if found.
      *
      * @param ScriptEvent $event
      */
     public function onInstallUpdateOrDump(ScriptEvent $event)
     {
-        $file = new JsonFile("C:/xampp_8.1.4-0_x64/htdocs/Webpages/php7.2_composer.json");
-        $json = $file->read();
-        file_put_contents("C:/xampp_8.1.4-0_x64/htdocs/Webpages/submodule/data.json", $json);
-        $this->io->write('<info>Congratulation , you are using at least PHP Version 7.4 :)</info>');
+        $this->logger->info(
+            " test onInstallUpdateOrDump"
+        );
     }
 
-    /**
-     * Handle an event callback following installation of a new package by
-     * checking to see if the package that was installed was our plugin.
-     *
-     * @param PackageEvent $event
-     */
+
     public function onPostPackageInstall(PackageEvent $event)
     {
         $op = $event->getOperation();
         if ($op instanceof InstallOperation) {
             $package = $op->getPackage()->getName();
             if ($package === self::PACKAGE_NAME) {
-                $this->io->write('<info> onPostPackageInstall </info>');
+                $this->logger->info('robotron-plugin installed');
             }
         }
     }
@@ -139,7 +134,7 @@ class RobotronPlugin implements PluginInterface, EventSubscriberInterface
      */
     public function onPostInstallOrUpdate(ScriptEvent $event)
     {
-        $this->io->write('<info> onPostInstallOrUpdate </info>');
+        $this->logger->log("\n".'<info> robotron-plugin Running composer update </info>');
     }
 }
 
