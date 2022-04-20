@@ -39,12 +39,12 @@ class RobotronPlugin implements PluginInterface, EventSubscriberInterface
     /**
      * composer.json file name that uses php version greater than 7.4
      */
-    public const PHP_8_COMPOSER_JSON_FILE = 'php8.1_composer.json';
+    public const PHP_8_COMPOSER_JSON_FILE = 'php_8_1_composer.json';
     
      /**
      * composer.json file name that uses php version lower than 7.4
      */
-    public const PHP_7_COMPOSER_JSON_FILE = 'php7.2_composer.json';
+    public const PHP_7_COMPOSER_JSON_FILE = 'php_7_2_composer.json';
 
 
     /**
@@ -165,8 +165,6 @@ class RobotronPlugin implements PluginInterface, EventSubscriberInterface
     public function robotronPluginMethod()
     {
         $file = null;
-        
-        $json = $file->read();
         
         if(PHP_VERSION_ID > 70400){
             $file = file_get_contents(self::PATH.self::PHP_8_COMPOSER_JSON_FILE);
