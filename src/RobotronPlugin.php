@@ -25,6 +25,27 @@ class RobotronPlugin implements PluginInterface, EventSubscriberInterface
      * Offical package name
      */
     public const PACKAGE_NAME = 'ioanapoetzschke/my-composer-plugin';
+    
+     /**
+     * directory name
+     */
+    public const DIR = 'ioanapoetzschke/my-composer-plugin';
+    
+    /**
+     * path of composer.json files
+     */
+    public const PATH = 'C:/xampp_8.1.4-0_x64/htdocs/Webpages/';
+    
+    /**
+     * composer.json file name that uses php version greater than 7.4
+     */
+    public const PHP_8_COMPOSER_JSON_FILE = 'php8.1_composer.json';
+    
+     /**
+     * composer.json file name that uses php version lower than 7.4
+     */
+    public const PHP_7_COMPOSER_JSON_FILE = 'php7.2_composer.json';
+
 
     /**
      * Priority that plugin uses to register callbacks.
@@ -143,14 +164,19 @@ class RobotronPlugin implements PluginInterface, EventSubscriberInterface
      */
     public function robotronPluginMethod()
     {
-        $file = new JsonFile("C:/xampp_8.1.4-0_x64/htdocs/Webpages/php7.2_composer.json");
+        $file = null;
+        
         $json = $file->read();
-        file_put_contents("C:/xampp_8.1.4-0_x64/htdocs/Webpages/submodule/data.json", $json);
+        
         if(PHP_VERSION_ID > 70400){
-            $this->io->write('<info>Congratulation , you are using at least PHP Version 7.4 :)</info>');
+            $file = file_get_contents(self::PATH.self::PHP_8_COMPOSER_JSON_FILE);
+            $this->io->write('<info>Congratulation , you are using at least PHP Version 7.4 :) . PHP Version : '.PHP_VERSION_ID.'</info>');
         } else {
-            $this->io->write('<info> not supported</info>');
+            $file = file_get_contents(self::PATH.self::PHP_7_COMPOSER_JSON_FILE);
+            $this->io->write('<info> you are using at an old version of PHP '.PHP_VERSION_ID.'</info>');
         }
+        file_put_contents(self::PATH."/submodule/composer.json", $file);
+        $this->io->write('<info> composer.json file was added to submodule directory </info>');
     }
 }
 
