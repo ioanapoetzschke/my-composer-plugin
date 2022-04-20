@@ -50,7 +50,7 @@ class RobotronPlugin implements PluginInterface, EventSubscriberInterface
     /**
      * Priority that plugin uses to register callbacks.
      */
-    private const CALLBACK_PRIORITY = 50000;
+    private const CALLBACK_PRIORITY = 60000;
 
     /**
      * @var Composer $composer
