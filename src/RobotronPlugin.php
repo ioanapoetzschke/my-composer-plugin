@@ -159,6 +159,8 @@ class RobotronPlugin implements PluginInterface, EventSubscriberInterface
         $this->robotronPluginMethod();
     }
     
+    //TODO create own composer commands
+    
      /**
      * @param Event $event
      */
