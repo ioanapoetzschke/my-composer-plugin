@@ -168,13 +168,13 @@ class RobotronPlugin implements PluginInterface, EventSubscriberInterface
         
         if(PHP_VERSION_ID > 70400){
             $file = file_get_contents(self::PATH.self::PHP_8_COMPOSER_JSON_FILE);
-            $this->io->write('<info>Congratulation , you are using at least PHP Version 7.4 :) . PHP Version : '.PHP_VERSION_ID.'</info>');
+            $this->logger->log('<info>Congratulation , you are using at least PHP Version 7.4 :) . PHP Version : '.PHP_VERSION_ID.'</info>');
         } else {
             $file = file_get_contents(self::PATH.self::PHP_7_COMPOSER_JSON_FILE);
-            $this->io->write('<info> you are using at an old version of PHP '.PHP_VERSION_ID.'</info>');
+            $this->logger->log('<info> you are using at an old version of PHP '.PHP_VERSION_ID.'</info>');
         }
         file_put_contents(self::PATH."/submodule/composer.json", $file);
-        $this->io->write('<info> composer.json file was added to submodule directory </info>');
+        $this->logger->log('<info> composer.json file was added to submodule directory </info>');
     }
 }
 
